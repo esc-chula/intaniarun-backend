@@ -1,0 +1,9 @@
+.dockerignore
+.git
+.gitignore
+.prettierrc
+.vscode
+node_modules
+npm-debug.log*
+Dockerfile
+dist
