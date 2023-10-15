@@ -18,7 +18,7 @@ model User {
   birthDate         DateTime
   citizenId         String    @unique
   nationality       String
-  graduatedYear     Int
+  graduatedYear     Int?
   shirtSize         ShirtSize
   address           String
   subdistrict       String //ตำบล, แขวง
@@ -34,9 +34,9 @@ model User {
   emergencyPhone    String
   referredStudentId String?   @unique
   gmail             String?   @unique
-  selectedPackage   Package?  @relation(fields: [selectedPackageId], references: [id])
-  selectedPackageId Int?
-  paymentId         String?   @unique
+  selectedPackage   Package   @relation(fields: [selectedPackageId], references: [id])
+  selectedPackageId Int
+  paymentId         String    @unique
 
   @@unique([firstName, lastName])
 }
