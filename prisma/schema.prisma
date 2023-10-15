@@ -7,3 +7,71 @@ datasource db {
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
+
+model User {
+  id                String    @id @default(uuid())
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+  firstName         String
+  lastName          String
+  gender            Gender
+  birthDate         DateTime
+  citizenId         String    @unique
+  nationality       String
+  graduatedYear     Int
+  shirtSize         ShirtSize
+  address           String
+  subdistrict       String //ตำบล, แขวง
+  district          String //อำเภอ, เขต
+  province          String
+  country           String
+  postalCode        String
+  email             String
+  phone             String
+  disease           String
+  bloodType         BloodType
+  emergencyName     String
+  emergencyPhone    String
+  referredStudentId String?   @unique
+  gmail             String?   @unique
+  selectedPackage   Package?  @relation(fields: [selectedPackageId], references: [id])
+  selectedPackageId Int?
+  paymentId         String?   @unique
+
+  @@unique([firstName, lastName])
+}
+
+model Package {
+  id    Int      @id @default(autoincrement())
+  name  String   @unique
+  price Int
+  items String[]
+  User  User[]
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum BloodType {
+  A_PLUS
+  A_MINUS
+  B_PLUS
+  B_MINUS
+  O_PLUS
+  O_MINUS
+  AB_PLUS
+  AB_MINUS
+}
+
+enum ShirtSize {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+}
