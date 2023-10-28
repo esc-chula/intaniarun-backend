@@ -37,6 +37,11 @@ model User {
   @@unique([firstName, lastName])
 }
 
+model Counter {
+  packageType PackageType @id
+  count       Int
+}
+
 enum Gender {
   MALE
   FEMALE
