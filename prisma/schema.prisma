@@ -9,14 +9,14 @@ datasource db {
 }
 
 model User {
-  id                String     @id @default(uuid())
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
+  id                String      @id @default(uuid())
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
   firstName         String
   lastName          String
   gender            Gender
   birthDate         DateTime
-  citizenId         String     @unique
+  citizenId         String      @unique
   nationality       String
   shirtSize         ShirtSize
   province          String
@@ -27,24 +27,14 @@ model User {
   emergencyName     String
   emergencyPhone    String
   relationship      String
-  referredStudentId String?    @unique
-  gmail             String?    @unique
+  referredStudentId String?     @unique
+  gmail             String?     @unique
   type              RunnerType
-  runnerNo          String     @unique
-  selectedPackage   Package    @relation(fields: [selectedPackageId], references: [id])
-  selectedPackageId Int
-  paymentId         String     @unique
+  runnerNo          String      @unique
+  selectedPackage   PackageType
+  paymentId         String      @unique
 
   @@unique([firstName, lastName])
-}
-
-model Package {
-  id    Int      @id @default(autoincrement())
-  name  String   @unique
-  price Int
-  count Int      @default(0)
-  items String[]
-  User  User[]
 }
 
 enum Gender {
@@ -78,4 +68,9 @@ enum RunnerType {
   ALUMNI
   STUDENT
   PUBLIC
+}
+
+enum PackageType {
+  F
+  T
 }
