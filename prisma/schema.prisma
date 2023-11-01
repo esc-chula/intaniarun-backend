@@ -27,12 +27,12 @@ model User {
   emergencyName      String
   emergencyPhone     String
   relationship       String
-  referredStudentId  String?     @unique
+  referredStudentId  String?
   gmail              String?     @unique
   type               RunnerType
   runnerNo           String      @unique
   selectedPackage    PackageType
-  paymentId          String      @unique
+  paymentId          String
   receiverName       String?
   receiverPhone      String?
   receiverAddress    String?
