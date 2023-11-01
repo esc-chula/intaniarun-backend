@@ -1,6 +1,8 @@
 import express from 'express';
 
 import userControllers from '@/app/controllers/user.controllers';
+import { validate } from '@/utils/validate';
+import { userSchema, userUpdateSchema } from '@/utils/user.validator';
 
 const router = express.Router();
 
@@ -8,9 +10,9 @@ router.get('/', userControllers.getUsers);
 
 router.get('/:userId', userControllers.getUser);
 
-router.post('/', userControllers.createUser);
+router.post('/', validate(userSchema), userControllers.createUser);
 
-router.put('/:userId', userControllers.updateUser);
+router.put('/:userId', validate(userUpdateSchema), userControllers.updateUser);
 
 router.delete('/:userId', userControllers.deleteUser);
 

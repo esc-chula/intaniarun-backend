@@ -6,11 +6,23 @@ const prisma = new PrismaClient();
 async function createUser(req: Request, res: Response) {
     try {
         const newUser = req.body;
-        const user = await prisma.user.create({
-            data: newUser,
+        const counter = await prisma.counter.findUnique({
+            where: {
+                packageType: newUser.selectedPackage,
+            }
         });
+
+        if (!counter) throw new Error('Counter not found');
+
+        const [user, result] = await Promise.all([
+            prisma.user.create({
+                data: { ...newUser, runnerNo: newUser.selectedPackage + String(counter.count + 1).padStart(4, '0') },
+            }),
+            prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: counter.count + 1 } })])
+
         res.json(user);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Could not create user.' });
     }
 }

@@ -9,30 +9,34 @@ datasource db {
 }
 
 model User {
-  id                String      @id @default(uuid())
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
-  firstName         String
-  lastName          String
-  gender            Gender
-  birthDate         DateTime
-  citizenId         String      @unique
-  nationality       String
-  shirtSize         ShirtSize
-  province          String
-  email             String
-  phone             String
-  disease           String
-  bloodType         BloodType
-  emergencyName     String
-  emergencyPhone    String
-  relationship      String
-  referredStudentId String?     @unique
-  gmail             String?     @unique
-  type              RunnerType
-  runnerNo          String      @unique
-  selectedPackage   PackageType
-  paymentId         String      @unique
+  id                 String      @id @default(uuid())
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+  firstName          String
+  lastName           String
+  gender             Gender
+  birthDate          DateTime
+  citizenId          String      @unique
+  nationality        String
+  shirtSize          ShirtSize
+  province           String
+  email              String
+  phone              String
+  disease            String
+  bloodType          BloodType
+  emergencyName      String
+  emergencyPhone     String
+  relationship       String
+  referredStudentId  String?     @unique
+  gmail              String?     @unique
+  type               RunnerType
+  runnerNo           String      @unique
+  selectedPackage    PackageType
+  paymentId          String      @unique
+  receiverName       String?
+  receiverPhone      String?
+  receiverAddress    String?
+  receiverPostalCode String?
 
   @@unique([firstName, lastName])
 }

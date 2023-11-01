@@ -4,4 +4,7 @@
     "[prisma]": {
         "editor.defaultFormatter": "Prisma.prisma"
     },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
 }
