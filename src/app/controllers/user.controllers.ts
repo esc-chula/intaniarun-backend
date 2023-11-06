@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import sgMail from '@sendgrid/mail';
+import { envOrFail } from '@/utils/env';
+
+sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
 
 const prisma = new PrismaClient();
 
@@ -19,6 +23,14 @@ async function createUser(req: Request, res: Response) {
                 data: { ...newUser, runnerNo: newUser.selectedPackage + String(counter.count + 1).padStart(4, '0') },
             }),
             prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: counter.count + 1 } })])
+
+        const msg = {
+            to: user.email,
+            from: '',
+            subject: 'ยืนยัน',
+            text: 'test',
+        };
+        await sgMail.send(msg);
 
         res.json(user);
     } catch (error) {
@@ -51,6 +63,8 @@ async function getUsers(req: Request, res: Response) {
         const users = await prisma.user.findMany();
         res.json(users);
     } catch (error) {
+        console.log(error);
+
         res.status(500).json({ error: 'Could not fetch users.' });
     }
 }

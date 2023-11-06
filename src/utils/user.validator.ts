@@ -30,12 +30,7 @@ const user = {
     emergencyName: joi.string().required(),
     emergencyPhone: joi.string().regex(/^[0-9]{10}$/).required(),
     relationship: joi.string().required(),
-    referredStudentId: joi.string().regex(/^(66|65|64|63)3\d{5}21$/),
-    gmail: joi.string().email().custom((value, helper) => {
-        if (!value.includes('@student.chula.ac.th'))
-            return helper.message({ custom: 'Invalid Chula student email' });
-        return value;
-    }),
+    gmail: joi.string().regex(/^(66|65|64|63)3\d{5}21@student.chula.ac.th$/).message('Invalid Gmail'),
     type: joi.string().valid('STUDENT', 'ALUMNI', 'PUBLIC').required(),
     selectedPackage: joi.string().valid('F', 'T').required(),
     paymentId: joi.string().required(),

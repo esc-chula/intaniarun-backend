@@ -27,7 +27,6 @@ model User {
   emergencyName      String
   emergencyPhone     String
   relationship       String
-  referredStudentId  String?
   gmail              String?     @unique
   type               RunnerType
   runnerNo           String      @unique
