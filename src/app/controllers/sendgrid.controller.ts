@@ -1,4 +1,4 @@
-import { ErrorRequestHandler, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import sgMail from '@sendgrid/mail';
 import { envOrFail } from '@/utils/env';
 
@@ -9,11 +9,14 @@ async function sendEmail(req: Request, res: Response) {
         const { to, subject, text } = req.body;
         const msg = {
             to,
-            from: '',
+            from: { 'email': 'intaniarun@gmail.com', 'name': 'Intania Run 2024' },
             subject,
             text,
         };
-        await sgMail.send(msg).catch((error) => { console.log(error.response.body) });
+        await sgMail.send(msg).catch((error) => {
+            console.log(error.response.body);
+            throw new Error('Could not send email')
+        });
         res.json({ message: 'Email sent' });
     }
     catch (error) {
