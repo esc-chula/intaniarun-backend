@@ -12,7 +12,7 @@ const user = {
         return value;
     }).required(),
     nationality: joi.string().required(),
-    shirtSize: joi.string().valid('XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXL').required(),
+    shirtSizeArr: joi.array().items(joi.string().valid('XS', 'S', 'M', 'L', 'XL', 'XXL', 'XXL')).required(),
     province: joi.string().required(),
     email: joi.string().email().required(),
     phone: joi.string().regex(/^[0-9]{10}$/).required(),

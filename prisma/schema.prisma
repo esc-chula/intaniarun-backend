@@ -18,7 +18,7 @@ model User {
   birthDate          DateTime
   citizenId          String      @unique
   nationality        String
-  shirtSize          ShirtSize
+  shirtSizeArr       ShirtSize[]
   province           String
   email              String
   phone              String
