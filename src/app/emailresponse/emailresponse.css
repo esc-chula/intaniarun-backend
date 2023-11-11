@@ -1,0 +1,18 @@
+/* styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Jockey+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+
+body {
+    font-family: 'Inter';
+    /* Fallback to Arial or default sans-serif if Inter is not available */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Jockey One', Arial, sans-serif;
+    /* Fallback to Arial or default sans-serif if Jockey One is not available */
+}
