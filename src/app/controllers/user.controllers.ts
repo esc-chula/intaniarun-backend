@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import sgMail from '@sendgrid/mail';
 import { envOrFail } from '@/utils/env';
 import { emailText, emailTitle } from '@/utils/template';
+import { nextRunnerNo } from '@/utils/runnerNo';
 
 sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
 
@@ -17,11 +18,12 @@ async function createUser(req: Request, res: Response) {
 
         if (!counter) throw new Error('Counter not found');
 
+        const runnerNo = nextRunnerNo(counter.count)
         const [user, result] = await Promise.all([
             prisma.user.create({
-                data: { ...newUser, runnerNo: newUser.selectedPackage + String(counter.count + 1).padStart(4, '0') },
+                data: { ...newUser, runnerNo: newUser.selectedPackage + String(runnerNo).padStart(4, '0') },
             }),
-            prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: counter.count + 1 } })])
+            prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: runnerNo } })])
 
         const msg = {
             to: user.email,
