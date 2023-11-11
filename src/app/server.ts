@@ -6,6 +6,7 @@ import helmet from 'helmet';
 import defaultRoutes from '@/app/routes/default.routes';
 import errorRoutes from '@/app/routes/error.routes';
 import userRoutes from '@/app/routes/user.routes';
+import sendGridroutes from '@/app/routes/sendgrid.routes';
 import appConfig from '@/config/app';
 import corsOptions from '@/config/cors';
 import logger from '@/utils/logger';
@@ -21,6 +22,7 @@ async function serve() {
 
     app.use('/', defaultRoutes);
     app.use('/user', userRoutes);
+    app.use('/sendgrid', sendGridroutes);
     app.use(errorRoutes);
 
     app.listen(appConfig.port, () => {
