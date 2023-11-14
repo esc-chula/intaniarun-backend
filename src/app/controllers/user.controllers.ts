@@ -1,11 +1,8 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import sgMail from '@sendgrid/mail';
-import { envOrFail } from '@/utils/env';
-import { emailText, emailTitle } from '@/utils/template';
 import { nextRunnerNo } from '@/utils/runnerNo';
 
-sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
+
 
 const prisma = new PrismaClient();
 
@@ -19,23 +16,19 @@ async function createUser(req: Request, res: Response) {
         if (!counter) throw new Error('Counter not found');
 
         const runnerNo = nextRunnerNo(counter.count)
-        const [user, result] = await Promise.all([
-            prisma.user.create({
-                data: { ...newUser, runnerNo: newUser.selectedPackage + String(runnerNo).padStart(4, '0') },
-            }),
-            prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: runnerNo } })])
 
-        const msg = {
-            to: user.email,
-            from: { 'email': 'intaniarun@gmail.com', 'name': 'Intania Run 2024' },
-            subject: emailTitle(),
-            text: emailText(user),
-        };
-        await sgMail.send(msg);
+        await prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: runnerNo } })
+
+        const user = await prisma.user.create({
+            data: {
+                ...newUser,
+                runnerNo: newUser.selectedPackage + String(runnerNo).padStart(4, '0'),
+                emailSent: false
+            },
+        })
 
         res.json(user);
     } catch (error) {
-        console.error(error);
         res.status(500).json({ error: 'Could not create user.' });
     }
 }
@@ -64,8 +57,6 @@ async function getUsers(req: Request, res: Response) {
         const users = await prisma.user.findMany();
         res.json(users);
     } catch (error) {
-        console.log(error);
-
         res.status(500).json({ error: 'Could not fetch users.' });
     }
 }

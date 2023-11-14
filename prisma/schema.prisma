@@ -9,33 +9,30 @@ datasource db {
 }
 
 model User {
-  id                 String      @id @default(uuid())
-  createdAt          DateTime    @default(now())
-  updatedAt          DateTime    @updatedAt
-  firstName          String
-  lastName           String
-  gender             Gender
-  birthDate          DateTime
-  citizenId          String      @unique
-  nationality        String
-  shirtSizeArr       ShirtSize[]
-  province           String
-  email              String
-  phone              String
-  disease            String
-  bloodType          BloodType
-  emergencyName      String
-  emergencyPhone     String
-  relationship       String
-  gmail              String?     @unique
-  type               RunnerType
-  runnerNo           String      @unique
-  selectedPackage    PackageType
-  paymentId          String
-  receiverName       String?
-  receiverPhone      String?
-  receiverAddress    String?
-  receiverPostalCode String?
+  id              String      @id @default(uuid())
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  firstName       String
+  lastName        String
+  gender          Gender
+  birthDate       DateTime
+  citizenId       String      @unique
+  nationality     String
+  shirtSizeArr    String[]
+  province        String
+  email           String
+  phone           String
+  disease         String
+  bloodType       BloodType
+  emergencyName   String
+  emergencyPhone  String
+  relationship    String
+  gmail           String?     @unique
+  type            RunnerType
+  runnerNo        String      @unique
+  selectedPackage PackageType
+  paymentId       String
+  emailSent       Boolean     @default(false)
 
   @@unique([firstName, lastName])
 }
@@ -60,16 +57,6 @@ enum BloodType {
   O_MINUS
   AB_PLUS
   AB_MINUS
-}
-
-enum ShirtSize {
-  XS
-  S
-  M
-  L
-  XL
-  XXL
-  XXXL
 }
 
 enum RunnerType {
