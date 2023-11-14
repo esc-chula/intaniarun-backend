@@ -13,10 +13,7 @@ async function sendEmail(req: Request, res: Response) {
             subject,
             text,
         };
-        await sgMail.send(msg).catch((error) => {
-            console.log(error.response.body);
-            throw new Error('Could not send email')
-        });
+        await sgMail.send(msg);
         res.json({ message: 'Email sent' });
     }
     catch (error) {
