@@ -16,15 +16,16 @@ async function createUser(req: Request, res: Response) {
         if (!counter) throw new Error('Counter not found');
 
         const runnerNo = nextRunnerNo(counter.count)
-        const [user, result] = await Promise.all([
-            prisma.user.create({
-                data: {
-                    ...newUser,
-                    runnerNo: newUser.selectedPackage + String(runnerNo).padStart(4, '0'),
-                    emailSent: false
-                },
-            }),
-            prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: runnerNo } })])
+
+        await prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: runnerNo } })
+
+        const user = await prisma.user.create({
+            data: {
+                ...newUser,
+                runnerNo: newUser.selectedPackage + String(runnerNo).padStart(4, '0'),
+                emailSent: false
+            },
+        })
 
         res.json(user);
     } catch (error) {
