@@ -11,6 +11,7 @@ import appConfig from '@/config/app';
 import corsOptions from '@/config/cors';
 import logger from '@/utils/logger';
 import morganMiddleware from '@/utils/morgan';
+import uploadFileRoutes from './routes/uploadFile.routes';
 
 const app = express();
 
@@ -23,6 +24,7 @@ async function serve() {
     app.use('/', defaultRoutes);
     app.use('/user', userRoutes);
     app.use('/mail', sendGridRoutes);
+    app.use('/file', uploadFileRoutes);
     app.use(errorRoutes);
 
     app.listen(appConfig.port, () => {
