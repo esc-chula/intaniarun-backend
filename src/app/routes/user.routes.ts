@@ -3,17 +3,18 @@ import express from 'express';
 import userControllers from '@/app/controllers/user.controllers';
 import { userSchema, userUpdateSchema } from '@/utils/user.validator';
 import { validate } from '@/utils/validate';
+import { checkAuthToken } from '@/utils/middleware';
 
 const router = express.Router();
 
-router.get('/', userControllers.getUsers);
+router.get('/', checkAuthToken, userControllers.getUsers);
 
 router.get('/:userId', userControllers.getUser);
 
-router.post('/', validate(userSchema), userControllers.createUser);
+router.post('/', checkAuthToken, validate(userSchema), userControllers.createUser);
 
-router.put('/:userId', validate(userUpdateSchema), userControllers.updateUser);
+router.put('/:userId', checkAuthToken, validate(userUpdateSchema), userControllers.updateUser);
 
-router.delete('/:userId', userControllers.deleteUser);
+router.delete('/:userId', checkAuthToken, userControllers.deleteUser);
 
 export default router;
