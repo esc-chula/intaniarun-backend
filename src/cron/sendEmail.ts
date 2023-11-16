@@ -2,7 +2,7 @@ import logger from "@/utils/logger"
 import { PrismaClient } from '@prisma/client';
 import sgMail from '@sendgrid/mail';
 import { envOrFail } from '@/utils/env';
-import { emailText, emailTitle } from '@/utils/template';
+import { emailText, emailTitle, emailHtml } from '@/utils/template';
 
 const prisma = new PrismaClient();
 sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
@@ -26,6 +26,12 @@ export const sendEmail = async () => {
                 from: { 'email': 'intaniarun@gmail.com', 'name': 'Intania Run 2024' },
                 subject: emailTitle(),
                 text: emailText(user),
+                content: [
+                    {
+                        type: "text/html",
+                        value: emailHtml(user),
+                    }
+                ],
             };
 
             await sgMail.send(msg)
