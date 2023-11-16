@@ -10,7 +10,9 @@ RUN pnpm install
 
 COPY . .
 
-RUN ["pnpm", "run", "build"]
+RUN pnpm prisma generate
+
+RUN pnpm run build
 
 EXPOSE 4000
 
