@@ -1,8 +1,7 @@
-import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
+import { Request, Response } from 'express';
+
 import { nextRunnerNo } from '@/utils/runnerNo';
-
-
 
 const prisma = new PrismaClient();
 
@@ -10,22 +9,26 @@ async function createUser(req: Request, res: Response) {
     try {
         const newUser = req.body;
         const counter = await prisma.counter.findUnique({
-            where: { packageType: newUser.selectedPackage }
+            where: { packageType: newUser.selectedPackage },
         });
 
         if (!counter) throw new Error('Counter not found');
 
-        const runnerNo = nextRunnerNo(counter.count)
+        const runnerNo = nextRunnerNo(counter.count);
 
-        await prisma.counter.update({ where: { packageType: newUser.selectedPackage }, data: { count: runnerNo } })
+        await prisma.counter.update({
+            where: { packageType: newUser.selectedPackage },
+            data: { count: runnerNo },
+        });
 
         const user = await prisma.user.create({
             data: {
                 ...newUser,
-                runnerNo: newUser.selectedPackage + String(runnerNo).padStart(4, '0'),
-                emailSent: false
+                runnerNo:
+                    newUser.selectedPackage + String(runnerNo).padStart(4, '0'),
+                emailSent: false,
             },
-        })
+        });
 
         res.json(user);
     } catch (error) {
