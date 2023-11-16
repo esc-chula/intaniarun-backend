@@ -7,6 +7,8 @@ on:
 
 env:
     IMAGE_REPO: ghcr.io/${{ github.repository }}
+    SSH_KEY: ${{ secrets.SSH_KEY }}
+    SERVER_IP: ${{ secrets.SERVER_IP }}
 
 jobs:
     build-and-deploy:
@@ -26,3 +28,12 @@ jobs:
               run: |
                   docker tag intaniarun-production ghcr.io/${{ env.IMAGE_REPO }}/intaniarun-production
                   docker push ghcr.io/${{ env.IMAGE_REPO }}/intaniarun-production
+            - name: Set up SSH key
+              run: |
+                  mkdir -p ~/.ssh/
+                  echo "${{ env.SSH_KEY }}" > ~/.ssh/id_rsa
+                  chmod 600 ~/.ssh/id_rsa
+                  ssh-keyscan -H "${{ env.SERVER_IP }}" >> ~/.ssh/known_hosts
+            - name: SSH and execute deploy.sh
+              run: |
+                  ssh -i ~/.ssh/id_rsa ubuntu@"${{env.SERVER_IP}}" "bash ~/deploy.sh"
