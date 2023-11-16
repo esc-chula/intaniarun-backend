@@ -1,7 +1,8 @@
-import logger from "@/utils/logger"
 import { PrismaClient } from '@prisma/client';
 import sgMail from '@sendgrid/mail';
+
 import { envOrFail } from '@/utils/env';
+import logger from '@/utils/logger';
 import { emailText, emailTitle } from '@/utils/template';
 
 const prisma = new PrismaClient();
@@ -12,28 +13,30 @@ export const sendEmail = async () => {
         where: {
             emailSent: false,
             createdAt: {
-                lte: new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000)
-            }
-        }
+                lte: new Date(new Date().getTime() - 3 * 24 * 60 * 60 * 1000),
+            },
+        },
     });
 
-    const emailSent: string[] = []
+    const emailSent: string[] = [];
 
     for (const user of usersNotReceivingEmail) {
         try {
             const msg = {
                 to: user.email,
-                from: { 'email': 'intaniarun@gmail.com', 'name': 'Intania Run 2024' },
+                from: {
+                    email: 'intaniarun@gmail.com',
+                    name: 'Intania Run 2024',
+                },
                 subject: emailTitle(),
                 text: emailText(user),
             };
 
-            await sgMail.send(msg)
+            await sgMail.send(msg);
 
             emailSent.push(user.id);
             // console.log(`Email sent to ${user.email}`);
-        }
-        catch (error) {
+        } catch (error) {
             logger.error(`Error sending email to ${user.email} (${user.id})`);
         }
     }
@@ -41,13 +44,15 @@ export const sendEmail = async () => {
     const updatedData = await prisma.user.updateMany({
         where: {
             id: {
-                in: emailSent
-            }
+                in: emailSent,
+            },
         },
         data: {
-            emailSent: true
-        }
-    })
+            emailSent: true,
+        },
+    });
 
-    logger.info(`Email sent to ${updatedData.count} users from ${usersNotReceivingEmail.length} users who should've received.`)
-}
+    logger.info(
+        `Email sent to ${updatedData.count} users from ${usersNotReceivingEmail.length} users who should've received.`
+    );
+};

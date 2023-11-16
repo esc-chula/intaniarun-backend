@@ -5,12 +5,13 @@ import helmet from 'helmet';
 
 import defaultRoutes from '@/app/routes/default.routes';
 import errorRoutes from '@/app/routes/error.routes';
-import userRoutes from '@/app/routes/user.routes';
 import sendGridRoutes from '@/app/routes/sendgrid.routes';
+import userRoutes from '@/app/routes/user.routes';
 import appConfig from '@/config/app';
 import corsOptions from '@/config/cors';
 import logger from '@/utils/logger';
 import morganMiddleware from '@/utils/morgan';
+
 import uploadFileRoutes from './routes/uploadFile.routes';
 
 const app = express();
