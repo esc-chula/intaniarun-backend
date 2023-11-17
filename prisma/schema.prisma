@@ -9,16 +9,14 @@ datasource db {
 }
 
 model User {
-  id              String      @id @default(uuid())
-  createdAt       DateTime    @default(now())
-  updatedAt       DateTime    @updatedAt
+  id              String     @id @default(uuid())
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
   firstName       String
   lastName        String
   gender          Gender
   birthDate       DateTime
-  citizenId       String      @unique
-  nationality     String
-  shirtSizeArr    String[]
+  shirtSize       String
   province        String
   email           String
   phone           String
@@ -27,18 +25,18 @@ model User {
   emergencyName   String
   emergencyPhone  String
   relationship    String
-  gmail           String?     @unique
+  gmail           String?    @unique
   type            RunnerType
-  runnerNo        String      @unique
-  selectedPackage PackageType
+  runnerNo        String     @unique
+  selectedPackage String
   paymentId       String
-  emailSent       Boolean     @default(false)
+  emailSent       Boolean    @default(false)
 
   @@unique([firstName, lastName])
 }
 
 model Counter {
-  packageType PackageType @id
+  packageType String @id
   count       Int
 }
 
@@ -49,23 +47,16 @@ enum Gender {
 }
 
 enum BloodType {
-  A_PLUS
-  A_MINUS
-  B_PLUS
-  B_MINUS
-  O_PLUS
-  O_MINUS
-  AB_PLUS
-  AB_MINUS
+  A
+  B
+  O
+  AB
 }
 
 enum RunnerType {
   ALUMNI
   STUDENT
   PUBLIC
-}
-
-enum PackageType {
-  F
-  T
+  VIP
+  CHULA
 }
