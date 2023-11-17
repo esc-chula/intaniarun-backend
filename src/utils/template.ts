@@ -2,22 +2,14 @@ import { $Enums, User } from '@prisma/client';
 
 const bloodTypetoString = (bloodType: $Enums.BloodType) => {
     switch (bloodType) {
-        case 'A_PLUS':
-            return 'A+';
-        case 'A_MINUS':
-            return 'A-';
-        case 'B_PLUS':
-            return 'B+';
-        case 'B_MINUS':
-            return 'B-';
-        case 'O_PLUS':
-            return 'O+';
-        case 'O_MINUS':
-            return 'O-';
-        case 'AB_PLUS':
-            return 'AB+';
-        case 'AB_MINUS':
-            return 'AB-';
+        case 'A':
+            return 'A';
+        case 'B':
+            return 'B';
+        case 'O':
+            return 'O';
+        case 'AB':
+            return 'AB';
         default:
             return 'ไม่มีข้อมูล';
     }
@@ -50,14 +42,9 @@ export const emailText = (user: User) => {
         'โทรศัพท์: ' +
         user.phone +
         '\n' +
-        'เลขประจำตัวประชาชน: ' +
-        user.citizenId +
-        '\n' +
         'หมู่เลือด: ' +
         bloodTypetoString(user.bloodType) +
         '\n' +
-        `ประเภทการวิ่ง: ${
-            user.selectedPackage === 'T' ? '10 กิโลเมตร' : '5 กิโลเมตร'
-        }`
+        `ประเภทการวิ่ง: ${user.selectedPackage} กิโลเมตร`
     );
 };
