@@ -1,15 +1,11 @@
 import joi from 'joi';
-const validateThaiID = require('thai-id-validator');
 
 const user = {
     firstName: joi.string().required(),
     lastName: joi.string().required(),
     gender: joi.string().valid('MALE', 'FEMALE', 'OTHER').required(),
     birthDate: joi.date().required(),
-    shirtSize: joi
-        .string()
-        .valid('XS', 'S', 'M', 'L', 'XL', '2L', '3L', '5L', '7L')
-        .required(),
+    shirtSize: joi.string().required(),
     province: joi.string().required(),
     email: joi
         .string()
@@ -20,7 +16,7 @@ const user = {
         .regex(/^[0-9]{10}$/)
         .required(),
     disease: joi.string().required(),
-    bloodType: joi.string().valid('A', 'B', 'AB', 'O').required(),
+    bloodType: joi.string().valid('A', 'B', 'AB', 'O', 'ไม่ทราบ').required(),
     emergencyName: joi.string().required(),
     emergencyPhone: joi
         .string()
