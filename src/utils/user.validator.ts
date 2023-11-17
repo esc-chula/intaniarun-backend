@@ -37,6 +37,8 @@ const user = {
         .valid('VIP', 'STUDENT', 'ALUMNI', 'CHULA', 'PUBLIC')
         .required(),
     selectedPackage: joi.string().valid('3.711', '10.111').required(),
+    paymentId: joi.string().required(),
+    joinedYear: joi.number().optional(),
 };
 
 export const userSchema = joi.object(user);

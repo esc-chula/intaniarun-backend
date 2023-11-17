@@ -25,12 +25,13 @@ model User {
   emergencyName   String
   emergencyPhone  String
   relationship    String
-  gmail           String?    @unique
+  gmail           String?
   type            RunnerType
-  runnerNo        String     @unique
+  runnerNo        String
   selectedPackage String
   paymentId       String
   emailSent       Boolean    @default(false)
+  joinedYear      Int?
 
   @@unique([firstName, lastName])
 }

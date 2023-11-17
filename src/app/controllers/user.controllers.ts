@@ -8,6 +8,9 @@ const prisma = new PrismaClient();
 async function createUser(req: Request, res: Response) {
     try {
         const newUser = req.body;
+        newUser.birthDate = new Date(newUser.birthDate);
+        console.log(req.body);
+
         const counter = await prisma.counter.findUnique({
             where: { packageType: newUser.selectedPackage },
         });
@@ -18,17 +21,24 @@ async function createUser(req: Request, res: Response) {
 
         await prisma.counter.update({
             where: { packageType: newUser.selectedPackage },
-            data: { count: runnerNo },
+            data: { count: runnerNo, },
+        });
+        console.log("Counter: ", counter, "Runner: ", runnerNo, {
+            ...newUser,
+            runnerNo:
+                String(runnerNo).padStart(4, '0'),
+            emailSent: false,
         });
 
         const user = await prisma.user.create({
             data: {
                 ...newUser,
                 runnerNo:
-                    newUser.selectedPackage + String(runnerNo).padStart(4, '0'),
+                    String(runnerNo).padStart(4, '0'),
                 emailSent: false,
             },
-        });
+        })
+        // .catch((err) => { console.error(err); });
 
         res.json(user);
     } catch (error) {

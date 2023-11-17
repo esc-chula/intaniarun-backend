@@ -30,13 +30,15 @@ async function uploadFile(req: Request, res: Response) {
         form.parse(req, async (error, fields, files) => {
             try {
                 if (error) throw error;
-                if (files.files[0].size > MAX_FILE_SIZE)
+                console.log(files);
+
+                if (files.file[0].size > MAX_FILE_SIZE)
                     throw new Error('File size too large');
 
-                const buffer = fs.readFileSync(files.files[0].path);
+                const buffer = fs.readFileSync(files.file[0].path);
                 const date = new Date();
                 const fileName =
-                    date.toISOString() + '_' + files.files[0].originalFilename;
+                    date.toISOString() + '_' + files.file[0].originalFilename;
                 const command = new PutObjectCommand({
                     Bucket: BUCKET_NAME,
                     Key: FOLDER_NAME + '/' + fileName,
@@ -46,14 +48,14 @@ async function uploadFile(req: Request, res: Response) {
 
                 return res.status(200).send({ ...response, fileName });
             } catch (error) {
-                // console.log(error);
+                console.log(error);
                 return res.status(500).send({
                     error: 'Could not upload. Please make sure that file is less than 4MB',
                 });
             }
         });
     } catch (error) {
-        // console.log(error);
+        console.log(error);
         res.status(500).json({ error: 'Form parsing error.' });
     }
 }
