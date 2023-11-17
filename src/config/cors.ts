@@ -9,7 +9,7 @@ const corsOptions: CorsOptions = {
         'https://preview.chulaintaniarun2024.com',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    allowedHeaders: 'Content-Type,Authorization',
+    allowedHeaders: 'Content-Type,Authorization,X-Auth-Token',
 };
 
 export default corsOptions;
