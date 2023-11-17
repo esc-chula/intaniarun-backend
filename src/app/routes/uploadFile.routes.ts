@@ -5,7 +5,7 @@ import { checkAuthToken } from '@/utils/middleware';
 
 const router = express.Router();
 
-router.post('/upload', checkAuthToken, uploadFile);
+router.post('/upload', uploadFile);
 
 router.get('/:key', checkAuthToken, getFile);
 

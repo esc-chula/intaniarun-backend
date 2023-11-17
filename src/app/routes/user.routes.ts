@@ -9,11 +9,10 @@ const router = express.Router();
 
 router.get('/', checkAuthToken, userControllers.getUsers);
 
-router.get('/:userId', userControllers.getUser);
+router.get('/:userId', checkAuthToken, userControllers.getUser);
 
 router.post(
     '/',
-    checkAuthToken,
     validate(userSchema),
     userControllers.createUser
 );
