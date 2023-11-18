@@ -52,6 +52,7 @@ enum BloodType {
   B
   O
   AB
+  UNKNOWN
 }
 
 enum RunnerType {
