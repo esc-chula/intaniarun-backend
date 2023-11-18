@@ -15,6 +15,7 @@ import {
     MAX_FILE_SIZE,
 } from '@/config/constants';
 import { envOrFail } from '@/utils/env';
+import logger from '@/utils/logger';
 
 const s3client = new S3Client({
     credentials: {
@@ -33,7 +34,7 @@ async function uploadFile(req: Request, res: Response) {
                 // console.log(files);
 
                 if (files.file[0].size > MAX_FILE_SIZE)
-                    throw new Error('File size too large');
+                    throw new Error(`${files.file[0].size} File size too large`);
 
                 const buffer = fs.readFileSync(files.file[0].path);
                 const date = new Date();
@@ -48,14 +49,14 @@ async function uploadFile(req: Request, res: Response) {
 
                 return res.status(200).send({ ...response, fileName });
             } catch (error) {
-                // console.log(error);
+                logger.error(`uploadFile ${error}`);
                 return res.status(500).send({
-                    error: 'Could not upload. Please make sure that file is less than 4MB',
+                    error: 'Could not upload. Please make sure that file is less than 100MB',
                 });
             }
         });
     } catch (error) {
-        // console.log(error);
+        logger.error(`uploadFile (form parsing) ${error}`);
         res.status(500).json({ error: 'Form parsing error.' });
     }
 }

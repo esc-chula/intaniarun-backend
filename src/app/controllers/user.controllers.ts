@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 
 import { nextRunnerNo } from '@/utils/runnerNo';
+import logger from '@/utils/logger';
 
 const prisma = new PrismaClient();
 
@@ -32,10 +33,10 @@ async function createUser(req: Request, res: Response) {
                 emailSent: false,
             },
         })
-        // .catch((err) => { console.error(err); });
 
         res.json(user);
     } catch (error) {
+        logger.error(`createUser ${error}`);
         res.status(500).json({ error: 'Could not create user.' });
     }
 }
@@ -50,11 +51,13 @@ async function getUser(req: Request, res: Response) {
         });
 
         if (!user) {
+            logger.error(`getUser ${userId} not found`);
             return res.status(404).json({ error: 'User not found' });
         }
 
         res.json(user);
     } catch (error) {
+        logger.error(`getUser ${error}`);
         res.status(500).json({ error: 'Could not fetch user.' });
     }
 }
