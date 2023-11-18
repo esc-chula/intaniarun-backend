@@ -10,6 +10,7 @@ async function createUser(req: Request, res: Response) {
     try {
         const newUser = req.body;
         newUser.birthDate = new Date(newUser.birthDate);
+        if (newUser.bloodType === 'ไม่ทราบ') newUser.bloodType = 'UNKNOWN';
         // console.log(req.body);
 
         const counter = await prisma.counter.findUnique({
