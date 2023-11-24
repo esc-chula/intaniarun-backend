@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 
 import { nextRunnerNo } from '@/utils/runnerNo';
 import logger from '@/utils/logger';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
 const prisma = new PrismaClient();
 
@@ -37,8 +38,19 @@ async function createUser(req: Request, res: Response) {
 
         res.json(user);
     } catch (error) {
-        logger.error(`createUser ${error}`);
-        res.status(500).json({ error: 'Could not create user.' });
+        const errorResponse = {
+            success: false,
+            message: 'Could not create user.'
+        }
+
+        if (error instanceof PrismaClientKnownRequestError) {
+            // console.log(error.code, error.meta, error.message);
+            const errorMessages = error.message.split('\n')
+            errorResponse.message = error.code + ', ' + errorMessages[errorMessages.length - 1];
+        }
+
+        logger.error(`createUser ${errorResponse}`);
+        res.status(500).json(errorResponse);
     }
 }
 
