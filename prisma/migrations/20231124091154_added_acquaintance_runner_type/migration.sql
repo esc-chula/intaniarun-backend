@@ -1,0 +1,2 @@
+-- AlterEnum
+ALTER TYPE "RunnerType" ADD VALUE 'ACQUAINTANCE';

@@ -31,7 +31,7 @@ async function uploadFile(req: Request, res: Response) {
         form.parse(req, async (error, fields, files) => {
             try {
                 if (error) throw error;
-                // console.log(files);
+                console.log(files);
 
                 if (files.file[0].size > MAX_FILE_SIZE)
                     throw new Error(`${files.file[0].size} File size too large`);
