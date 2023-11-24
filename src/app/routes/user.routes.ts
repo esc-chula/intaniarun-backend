@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.get('/', checkAuthToken, userControllers.getUsers);
 
+router.get('/email/:email', checkAuthToken, userControllers.getUsersByEmail);
+
 router.get('/:userId', checkAuthToken, userControllers.getUser);
 
 router.post(

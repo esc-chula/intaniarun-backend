@@ -72,6 +72,36 @@ async function getUsers(req: Request, res: Response) {
     }
 }
 
+async function getUsersByEmail(req: Request, res: Response) {
+    try {
+        const email = req.params.email;
+        // console.log(req.params);
+
+        const users = await prisma.user.findMany({
+            select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+                type: true,
+                selectedPackage: true,
+                shirtSize: true,
+                createdAt: true,
+                emailSent: true,
+            },
+            where: {
+                email: {
+                    equals: email,
+                }
+            },
+        },);
+        if (users.length === 0) return res.status(404).json({ error: 'User not found' });
+
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: 'Could not fetch users.' });
+    }
+}
+
 async function updateUser(req: Request, res: Response) {
     try {
         const userId = req.params.userId;
@@ -108,4 +138,5 @@ export default {
     getUsers,
     updateUser,
     deleteUser,
+    getUsersByEmail
 };
