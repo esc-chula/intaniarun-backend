@@ -54,6 +54,31 @@ async function createUser(req: Request, res: Response) {
     }
 }
 
+async function checkUsers(req: Request, res: Response) {
+    try {
+        const names = req.body.names;
+        // console.log(names);
+
+        const users = await prisma.user.findMany({
+            select: {
+                firstName: true,
+                lastName: true,
+                email: true,
+            },
+            where: {
+                AND: [
+                    { firstName: { in: names.map((name: { firstName: string, lastName: string }) => name.firstName) } },
+                    { lastName: { in: names.map((name: { firstName: string, lastName: string }) => name.lastName) } },
+                ]
+            },
+        },);
+
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ error: 'Could not fetch users.' });
+    }
+}
+
 async function getUser(req: Request, res: Response) {
     try {
         const userId = req.params.userId;
@@ -88,7 +113,7 @@ async function getUsersByEmail(req: Request, res: Response) {
     try {
         const email = req.params.email;
         // console.log(req.params);
-
+        console.dir(req)
         const users = await prisma.user.findMany({
             select: {
                 firstName: true,
@@ -146,6 +171,7 @@ async function deleteUser(req: Request, res: Response) {
 
 export default {
     createUser,
+    checkUsers,
     getUser,
     getUsers,
     updateUser,
