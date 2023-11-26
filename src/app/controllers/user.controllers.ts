@@ -112,8 +112,8 @@ async function getUsers(req: Request, res: Response) {
 async function getUsersByEmail(req: Request, res: Response) {
     try {
         const email = req.params.email;
-        // console.log(req.params);
-        console.dir(req)
+        console.log(req.params);
+        // console.dir(req)
         const users = await prisma.user.findMany({
             select: {
                 firstName: true,
@@ -128,6 +128,7 @@ async function getUsersByEmail(req: Request, res: Response) {
             where: {
                 email: {
                     equals: email,
+                    mode: 'insensitive',
                 }
             },
         },);
