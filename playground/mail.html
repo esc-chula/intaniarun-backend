@@ -103,8 +103,7 @@
                         <tr>
                             <td>
                                 <p>
-                                    เรียน คุณ${params.firstName}
-                                    ${params.lastname}
+                                    เรียน คุณ${user.firstName} ${user.lastname}
                                 </p>
                                 <p>
                                     กรรมการนิสิตคณะวิศวกรรมศาสตร์ (กวศ.) ร่วมกับ
@@ -126,7 +125,7 @@
                                             หมายเลขประจำตัว (BIB):
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${params.runnnerNo}
+                                            ${user.runnnerNo}
                                         </td>
                                     </tr>
                                     <tr>
@@ -134,7 +133,7 @@
                                             ประเภทผู้ร่วมกิจกรรม:
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${params.type}
+                                            ${user.type}
                                         </td>
                                     </tr>
                                     <tr>
@@ -142,7 +141,7 @@
                                             ระยะทางวิ่ง:
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${params.distance}
+                                            ${user.distance}
                                         </td>
                                     </tr>
                                     <tr>
@@ -150,7 +149,7 @@
                                             ขนาดเสื้อ:
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${params.shirtSize}
+                                            ${user.shirtSize}
                                         </td>
                                     </tr>
                                 </table>
@@ -226,7 +225,7 @@
                                 <img
                                     style="width: 100%; height: auto"
                                     alt="ใบเสร็จรับเงิน"
-                                    src="https://www.chulaintaniarun2024.com/api/og/receipt?hr_number=${params.runnerNo}&payment_date=15/11/2566&account_date=17/11/2566&name=${params.firstName}%20${params.lastName}&run_package=${params.type}&run_distance=${params.distance}&amount=1"
+                                    src="https://www.chulaintaniarun2024.com/api/og/receipt?hr_number=${user.runnerNo}&payment_date=15/11/2566&account_date=17/11/2566&name=${user.firstName}%20${user.lastName}&run_package=${user.type}&run_distance=${user.distance}&amount=1"
                                 />
                             </td>
                         </tr>
