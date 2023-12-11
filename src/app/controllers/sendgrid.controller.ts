@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 import { envOrFail } from '@/utils/env';
 import { emailHtml, emailTitle } from '@/utils/template';
+import logger from '@/utils/logger';
 
 sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
 
@@ -14,7 +15,10 @@ async function sendEmail(req: Request, res: Response) {
         const { to, subject, text } = req.body;
         const msg = {
             to,
-            from: { email: 'intaniarun@gmail.com', name: 'Intania Run 2024' },
+            from: {
+                email: 'no-reply@chulaintaniarun2024.com',
+                name: 'Chula Intania Run 2024',
+            },
             subject,
             text,
         };
@@ -39,8 +43,8 @@ async function sendConfirmationEmail(req: Request, res: Response) {
         const msg = {
             to: user.email,
             from: {
-                email: 'intaniarun@gmail.com',
-                name: 'Intania Run 2024',
+                email: 'no-reply@chulaintaniarun2024.com',
+                name: 'Chula Intania Run 2024',
             },
             subject: emailTitle(),
             html: emailHtml(user),
@@ -48,6 +52,7 @@ async function sendConfirmationEmail(req: Request, res: Response) {
         await sgMail.send(msg);
         res.json({ message: 'Email sent' });
     } catch (error) {
+        logger.error(error);
         res.status(500).json({ error: 'Could not send email.' });
     }
 }
