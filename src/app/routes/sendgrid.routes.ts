@@ -1,10 +1,10 @@
 import express from 'express';
 
-import { sendEmail } from '@/app/controllers/sendgrid.controller';
+import { sendConfirmationEmail, sendEmail } from '@/app/controllers/sendgrid.controller';
 import { checkAuthToken } from '@/utils/middleware';
 
 const router = express.Router();
 
-router.post('/send-email', checkAuthToken, sendEmail);
+router.post('/send-email', checkAuthToken, sendConfirmationEmail);
 
 export default router;
