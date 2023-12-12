@@ -3,7 +3,7 @@ import sgMail from '@sendgrid/mail';
 
 import { envOrFail } from '@/utils/env';
 import logger from '@/utils/logger';
-import { emailText, emailTitle } from '@/utils/template';
+import { emailHtml, emailTitle } from '@/utils/template';
 import { SENDING_EMAIL_OFFSET } from '@/config/constants';
 
 const prisma = new PrismaClient();
@@ -17,6 +17,7 @@ export const sendEmail = async () => {
                 lte: new Date(new Date().getTime() - SENDING_EMAIL_OFFSET),
             },
         },
+        take: 100,
     });
 
     const emailSent: string[] = [];
@@ -26,17 +27,17 @@ export const sendEmail = async () => {
             const msg = {
                 to: user.email,
                 from: {
-                    email: 'intaniarun@gmail.com',
-                    name: 'Intania Run 2024',
+                    email: 'no-reply@chulaintaniarun2024.com',
+                    name: 'Chula Intania Run 2024',
                 },
                 subject: emailTitle(),
-                text: emailText(user),
+                html: emailHtml(user),
             };
 
             await sgMail.send(msg);
 
             emailSent.push(user.id);
-            logger.info(`Email sent to ${user.email}`);
+            logger.info(`Email sent to ${user.email} (${user.id})`);
         } catch (error) {
             logger.error(`Error sending email to ${user.email} (${user.id})`);
         }
