@@ -125,7 +125,15 @@
                                             ประเภทผู้ร่วมกิจกรรม:
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${user.type}
+                                            ${user.type === 'VIP' ? 'VIP' :
+                                            user.type === 'ALUMNI' ?
+                                            'นิสิตเก่าวิศวฯ จุฬาฯ' : user.type
+                                            === 'ACQUAINTANCE' ?
+                                            'ครอบครัวและเพื่อนของนิสิตเก่า' :
+                                            user.type === 'STUDENT' ?
+                                            'นิสิตปัจจุบัน' : user.type ===
+                                            'CHULA' ? 'ประชาคมจุฬาฯ' :
+                                            'ประชาชนทั่วไป'}
                                         </td>
                                     </tr>
                                     <tr>
@@ -133,7 +141,7 @@
                                             ระยะทางวิ่ง:
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${user.selectedPackage}
+                                            ${user.selectedPackage} กม.
                                         </td>
                                     </tr>
                                     <tr>
@@ -162,8 +170,8 @@
                                     <a
                                         href="https://www.chulaintaniarun2024.com"
                                     >
-                                        www.chulaintaniarun2024.com
-                                    </a>
+                                        www.chulaintaniarun2024.com</a
+                                    >
                                     หากท่านต้องการสอบถามข้อมูลเพิ่มเติมกรุณาแอด
                                     <br />
                                     LINE OA :
@@ -200,24 +208,6 @@
                             border-radius: 12px;
                         "
                     >
-                        <tr>
-                            <td style="padding-top: 24px">
-                                <img
-                                    style="width: 100%; height: auto"
-                                    alt="กำหนดการวันจริง"
-                                    src="https://www.chulaintaniarun2024.com/static/schedule.png"
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding-top: 24px">
-                                <img
-                                    style="width: 100%; height: auto"
-                                    alt="รูปแผนที่ตึกวิศวฯ 100 ปี สำหรับรับเสื้อ"
-                                    src="https://www.chulaintaniarun2024.com/static/faculty_map.png"
-                                />
-                            </td>
-                        </tr>
                         <tr>
                             <td style="padding-top: 24px">
                                 <img
