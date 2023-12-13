@@ -19,18 +19,18 @@ async function updateUser() {
     });
     users.forEach((user) => {
         console.log(user);
-    })
+    });
     users.forEach(async (user, index) => {
         const results = await prisma.user.update({
             where: {
                 id: user.id,
             },
             data: {
-                runnerNo: '3' + String(index + 1).padStart(4, '0')
+                runnerNo: '3' + String(index + 1).padStart(4, '0'),
             },
             select: {
                 runnerNo: true,
-            }
+            },
         });
         console.log(results); // not in order
     });

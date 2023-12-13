@@ -1,10 +1,10 @@
 import { PrismaClient } from '@prisma/client';
 import sgMail from '@sendgrid/mail';
 
+import { SENDING_EMAIL_OFFSET } from '@/config/constants';
 import { envOrFail } from '@/utils/env';
 import logger from '@/utils/logger';
 import { emailHtml, emailTitle } from '@/utils/template';
-import { SENDING_EMAIL_OFFSET } from '@/config/constants';
 
 const prisma = new PrismaClient();
 sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
