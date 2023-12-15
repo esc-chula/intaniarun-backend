@@ -10,6 +10,7 @@ const prisma = new PrismaClient();
 sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
 
 export const sendEmail = async () => {
+    logger.info('Sending Confirmation Email...');
     const usersNotReceivingEmail = await prisma.user.findMany({
         where: {
             emailSent: false,
@@ -17,7 +18,7 @@ export const sendEmail = async () => {
                 lte: new Date(new Date().getTime() - SENDING_EMAIL_OFFSET),
             },
         },
-        take: 300,
+        take: 400,
     });
 
     const emailSent: string[] = [];

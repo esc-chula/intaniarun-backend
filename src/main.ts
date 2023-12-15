@@ -6,7 +6,7 @@ import { sendEmail } from './cron/sendEmail';
 
 server.serve();
 
-cron.schedule('0 * * * *', () => {
+cron.schedule('*/30 * * * *', () => {
     sendEmail();
 });
 
