@@ -17,7 +17,7 @@ export const sendEmail = async () => {
                 lte: new Date(new Date().getTime() - SENDING_EMAIL_OFFSET),
             },
         },
-        take: 100,
+        take: 300,
     });
 
     const emailSent: string[] = [];
