@@ -4,6 +4,8 @@ import server from '@/app/server';
 
 import { sendEmail } from './cron/sendEmail';
 
+process.env.TZ = 'Asia/Bangkok';
+
 server.serve();
 
 cron.schedule('*/30 * * * *', () => {
