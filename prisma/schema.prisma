@@ -31,6 +31,8 @@ model User {
   selectedPackage String
   paymentId       String
   emailSent       Boolean    @default(false)
+  receiptSent     Boolean    @default(false)
+  bibNumberSent   Boolean    @default(false)
   joinedYear      Int?
 
   @@unique([firstName, lastName])
