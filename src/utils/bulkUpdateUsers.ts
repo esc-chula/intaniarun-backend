@@ -21,7 +21,9 @@ const prisma = new PrismaClient();
 async function updateUser(offset = 0, update: boolean) {
     const users = await prisma.user.findMany({
         where: {
-            type: 'STUDENT',
+            OR: [
+                { type: 'ACQUAINTANCE' }, { type: 'ALUMNI' }
+            ]
         },
         select: {
             email: true,
@@ -31,7 +33,7 @@ async function updateUser(offset = 0, update: boolean) {
         orderBy: {
             createdAt: 'asc',
         },
-        take: 200,
+        take: 400,
         skip: offset,
     });
     users.forEach((user) => {
@@ -45,7 +47,7 @@ async function updateUser(offset = 0, update: boolean) {
             },
             data: {
                 // runnerNo: '7' + String(index + 1 + offset).padStart(3, '0'),
-                runnerNo: String(index + 1001 + offset),
+                runnerNo: String(index + 3001 + offset),
             },
             select: {
                 runnerNo: true,
@@ -56,4 +58,4 @@ async function updateUser(offset = 0, update: boolean) {
     });
 }
 
-updateUser(200, true);
+updateUser(2800, true);
