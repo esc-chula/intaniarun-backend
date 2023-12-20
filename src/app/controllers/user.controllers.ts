@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { Request, Response } from 'express';
 
-import { nextRunnerNo } from '@/utils/runnerNo';
+import { nextRunnerNoV2 } from '@/utils/runnerNo';
 import logger from '@/utils/logger';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 
@@ -12,27 +12,28 @@ async function createUser(req: Request, res: Response) {
         const newUser = req.body;
         newUser.birthDate = new Date(newUser.birthDate);
         if (newUser.bloodType === 'ไม่ทราบ') newUser.bloodType = 'UNKNOWN';
+        const counterPackageType = newUser.type === 'ACQUAINTANCE' || newUser.type === 'ALUMNI' ? 'ACQUAINTANCE_ALUMNI' : newUser.type
         // console.log(req.body);
-
         const counter = await prisma.counter.findUnique({
-            where: { packageType: newUser.selectedPackage },
+            where: { packageType: counterPackageType },
         });
 
         if (!counter) throw new Error('Counter not found');
 
-        const runnerNo = nextRunnerNo(counter.count);
+        const runnerNo = nextRunnerNoV2(counter.count, counterPackageType);
 
         await prisma.counter.update({
-            where: { packageType: newUser.selectedPackage },
-            data: { count: runnerNo, },
+            where: { packageType: counterPackageType },
+            data: { count: counter.count + 1, },
         });
 
         const user = await prisma.user.create({
             data: {
                 ...newUser,
-                runnerNo:
-                    String(runnerNo).padStart(4, '0'),
+                runnerNo: String(runnerNo),
                 emailSent: false,
+                receiptSent: false,
+                bibNumberSent: false,
             },
         })
 

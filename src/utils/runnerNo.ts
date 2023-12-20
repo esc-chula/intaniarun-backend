@@ -17,3 +17,40 @@ export const nextRunnerNo = (current: number) => {
     }
     return newNo;
 };
+
+// VIP
+// 1-1000
+
+// นิสิต
+// 1001-3000
+
+// นิสิตเก่า
+// 3001 - 6000
+
+// ประชาคมจุฬาฯ
+// 6001 - 7000
+
+// ประชาชนทั่วไป
+// 7001 - 8000
+
+// สปอนเซอร์ + PACER (รอสรุปจำนวน)
+// 9001 - 9999
+
+export const nextRunnerNoV2 = (current: number, counterPackageType: string) => {
+    switch (counterPackageType) {
+        case "VIP":
+            return String(current + 1)
+        case "STUDENT":
+            return String(current + 1 + 1000)
+        case "ACQUAINTANCE_ALUMNI":
+            return String(current + 1 + 3000)
+        case "CHULA":
+            return String(current + 1 + 6000)
+        case "PUBLIC":
+            return String(current + 1 + 7000)
+        case "EXTRA":
+            return String(current + 1 + 9000)
+        default:
+            return String(current + 1 + 99000)
+    }
+};
