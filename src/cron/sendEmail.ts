@@ -7,10 +7,12 @@ import logger from '@/utils/logger';
 import { emailHtml, emailTitle } from '@/utils/template';
 
 const prisma = new PrismaClient();
+
 sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
 
-export const sendEmail = async () => {
-    logger.info('Sending Confirmation Email...');
+export const sendFirstEmail = async () => {
+    logger.info('Sending First Email (Confirmation Email)...');
+
     const usersNotReceivingEmail = await prisma.user.findMany({
         where: {
             emailSent: false,
@@ -38,6 +40,7 @@ export const sendEmail = async () => {
             await sgMail.send(msg);
 
             emailSent.push(user.id);
+
             logger.info(`Email sent to ${user.email} (${user.id})`);
         } catch (error) {
             logger.error(`Error sending email to ${user.email} (${user.id})`);
@@ -59,3 +62,8 @@ export const sendEmail = async () => {
         `Email sent to ${updatedData.count} users from ${usersNotReceivingEmail.length} users who should've received.`
     );
 };
+
+export const sendSecondEmail = async () => {
+    logger.info('Sending Second Email (BIB and Receipt Email)...');
+
+}

@@ -64,4 +64,5 @@ enum RunnerType {
   VIP
   CHULA
   ACQUAINTANCE
+  EXTRA
 }

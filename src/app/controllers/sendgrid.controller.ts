@@ -10,7 +10,7 @@ import logger from '@/utils/logger';
 
 sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
 
-async function sendEmail(req: Request, res: Response) {
+async function sendFirstEmail(req: Request, res: Response) {
     try {
         const { to, subject, text } = req.body;
         const msg = {
@@ -28,9 +28,9 @@ async function sendEmail(req: Request, res: Response) {
         res.status(500).json({ error: 'Could not send email.' });
     }
 }
-export { sendEmail };
+export { sendFirstEmail };
 
-async function sendConfirmationEmail(req: Request, res: Response) {
+async function sendFirstEmail(req: Request, res: Response) {
     try {
         const { firstName, lastName } = req.body;
         const user = await prisma.user.findFirst({
@@ -56,4 +56,4 @@ async function sendConfirmationEmail(req: Request, res: Response) {
         res.status(500).json({ error: 'Could not send email.' });
     }
 }
-export { sendConfirmationEmail };
+export { sendFirstEmail };

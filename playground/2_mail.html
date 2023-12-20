@@ -125,15 +125,13 @@
                                             ประเภทผู้ร่วมกิจกรรม:
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${user.type === 'VIP' ? 'VIP' :
-                                            user.type === 'ALUMNI' ?
-                                            'นิสิตเก่าวิศวฯ จุฬาฯ' : user.type
-                                            === 'ACQUAINTANCE' ?
-                                            'ครอบครัวและเพื่อนของนิสิตเก่า' :
-                                            user.type === 'STUDENT' ?
-                                            'นิสิตปัจจุบัน' : user.type ===
-                                            'CHULA' ? 'ประชาคมจุฬาฯ' :
-                                            'ประชาชนทั่วไป'}
+                                            ${user.type === 'VIP' ? 'VIP' 
+                                            : user.type === 'ALUMNI' ? 'นิสิตเก่าวิศวฯ จุฬาฯ' 
+                                            : user.type === 'ACQUAINTANCE' ? 'ครอบครัวและเพื่อนของนิสิตเก่า' 
+                                            : user.type === 'STUDENT' ? 'นิสิตปัจจุบัน' 
+                                            : user.type === 'CHULA' ? 'ประชาคมจุฬาฯ' 
+                                            : user.type === 'EXTRA' ? 'เพิ่มเติม'
+                                            : 'ประชาชนทั่วไป'}
                                         </td>
                                     </tr>
                                     <tr>

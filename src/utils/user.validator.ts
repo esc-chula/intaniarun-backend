@@ -30,7 +30,7 @@ const user = {
         .message('Invalid gmail'),
     type: joi
         .string()
-        .valid('VIP', 'STUDENT', 'ALUMNI', 'CHULA', 'PUBLIC', 'ACQUAINTANCE')
+        .valid('VIP', 'STUDENT', 'ALUMNI', 'CHULA', 'PUBLIC', 'ACQUAINTANCE', 'EXTRA')
         .required(),
     selectedPackage: joi.string().valid('3.711', '10.111').required(),
     paymentId: joi.string().required(),
