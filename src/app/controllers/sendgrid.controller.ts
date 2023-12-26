@@ -12,26 +12,6 @@ sgMail.setApiKey(envOrFail('SENDGRID_API_KEY'));
 
 async function sendFirstEmail(req: Request, res: Response) {
     try {
-        const { to, subject, text } = req.body;
-        const msg = {
-            to,
-            from: {
-                email: 'no-reply@chulaintaniarun2024.com',
-                name: 'Chula Intania Run 2024',
-            },
-            subject,
-            text,
-        };
-        await sgMail.send(msg);
-        res.json({ message: 'Email sent' });
-    } catch (error) {
-        res.status(500).json({ error: 'Could not send email.' });
-    }
-}
-export { sendFirstEmail };
-
-async function sendFirstEmail(req: Request, res: Response) {
-    try {
         const { firstName, lastName } = req.body;
         const user = await prisma.user.findFirst({
             where: {
