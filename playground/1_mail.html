@@ -1,27 +1,14 @@
+<!-- confirmation email -->
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Chula Intaniarun 2024</title>
-
-        <!-- Desktop Outlook chokes on web font references and defaults to Times New Roman, so we force a safe fallback font. -->
-        <!--[if mso]>
-            <style>
-                * {
-                    font-family: sans-serif !important;
-                }
-            </style>
-        <![endif]-->
-
-        <!-- All other clients get the webfont reference; some will render the font and others will silently fail to the fallbacks. More on that here: http://stylecampaign.com/blog/2015/02/webfont-support-in-email/ -->
-        <!--[if !mso]><!-->
         <link
             href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;700&display=swap"
             rel="stylesheet"
             type="text/css"
         />
-        <!--<![endif]-->
-
         <style>
             * {
                 font-family: 'Noto Sans Thai', sans-serif;
@@ -125,13 +112,16 @@
                                             ประเภทผู้ร่วมกิจกรรม:
                                         </td>
                                         <td style="padding-right: 16px">
-                                            ${user.type === 'VIP' ? 'VIP' 
-                                            : user.type === 'ALUMNI' ? 'นิสิตเก่าวิศวฯ จุฬาฯ' 
-                                            : user.type === 'ACQUAINTANCE' ? 'ครอบครัวและเพื่อนของนิสิตเก่า' 
-                                            : user.type === 'STUDENT' ? 'นิสิตปัจจุบัน' 
-                                            : user.type === 'CHULA' ? 'ประชาคมจุฬาฯ' 
-                                            : user.type === 'EXTRA' ? 'เพิ่มเติม'
-                                            : 'ประชาชนทั่วไป'}
+                                            ${user.type === 'VIP' ? 'VIP' :
+                                            user.type === 'ALUMNI' ?
+                                            'นิสิตเก่าวิศวฯ จุฬาฯ' : user.type
+                                            === 'ACQUAINTANCE' ?
+                                            'ครอบครัวและเพื่อนของนิสิตเก่า' :
+                                            user.type === 'STUDENT' ?
+                                            'นิสิตปัจจุบัน' : user.type ===
+                                            'CHULA' ? 'ประชาคมจุฬาฯ' : user.type
+                                            === 'EXTRA' ? 'เพิ่มเติม' :
+                                            'ประชาชนทั่วไป'}
                                         </td>
                                     </tr>
                                     <tr>

@@ -2,7 +2,7 @@ import cron from 'node-cron';
 
 import server from '@/app/server';
 
-import { sendFirstEmail } from './cron/sendFirstEmail';
+import { sendFirstEmail } from './cron/sendEmail';
 
 process.env.TZ = 'Asia/Bangkok';
 
