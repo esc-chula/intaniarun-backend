@@ -123,6 +123,7 @@ async function getUsersByEmail(req: Request, res: Response) {
                 type: true,
                 selectedPackage: true,
                 shirtSize: true,
+                runnerNo: true,
                 createdAt: true,
                 emailSent: true,
             },
