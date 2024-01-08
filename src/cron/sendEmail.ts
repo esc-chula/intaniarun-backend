@@ -107,7 +107,7 @@ export const sendMultipleBibNumberEmail = async () => {
             },
         },
         data: {
-            emailSent: true,
+            bibNumberSent: true,
         },
     });
 
